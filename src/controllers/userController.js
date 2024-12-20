@@ -1,4 +1,4 @@
-const { getUsers } = require('../models/userModel');
+const { getUsers, addUser } = require('../models/userModel');
 
 const fetchUsers = async (req, res) => {
     try {
@@ -9,4 +9,20 @@ const fetchUsers = async (req, res) => {
     }
 };
 
-module.exports = { fetchUsers };
+const createUser = async (req, res) => {
+    try {
+        console.log('Received POST request to /api/users');
+        const { id, name } = req.body;
+        console.log(req.body);
+        console.log('Calling addUser with:', id, name);
+        await addUser(id, name);
+        res.status(201).json({ message: 'User added successfully!' });
+    } catch (error) {
+        console.error('Error in createUser:', error);
+        res.status(500).json({ message: 'Error adding user', error });
+    }
+};
+
+module.exports = { createUser, fetchUsers };
+
+

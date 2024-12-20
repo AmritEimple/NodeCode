@@ -1,8 +1,9 @@
 const express = require('express');
-const { fetchUsers } = require('../controllers/userController');
+const { createUser, fetchUsers } = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get('/users', fetchUsers);
+router.post('/api/users', createUser); // Add user
+router.get('/api/get/users', fetchUsers);  // Fetch all users
 
 module.exports = router;

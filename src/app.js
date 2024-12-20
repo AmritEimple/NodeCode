@@ -5,37 +5,50 @@ const userRoutes = require('./routes/userRoutes');
 const path = require("path");
 const app = express();
 
+
 // Middleware to serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "view")));
+//console.log(path.join(__dirname, "view"));
+app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, 'components'))); // Serve static files from the "public" directory
 
 // Route to serve the main HTML file
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "view", "index.html"));
-});
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "view", "index.html"));
+// });
+
 
 // Route to serve the main HTML file
-app.get("/ck", (req, res) => {
-    res.sendFile(path.join(__dirname, "view", "index1.html"));
-});
+// app.get("/ck", (req, res) => {
+//     res.sendFile(path.join(__dirname, "view", "index1.html"));
+// });
 
-app.set('view engine', 'ejs');
-app.set('view', 'view');
+// // Route to serve the add user HTML file
+// app.get("/adduser", (req, res) => {
+//     res.sendFile(path.join(__dirname, "view", "addUser.html"));
+// });
+
 
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
 // Routes
-app.use('/api', userRoutes);
+//app.use('/api/users', userRoutes);
 
-app.get("/default", (req, res) => {
-    res.send("Hello1233, World!");
+app.post('/api/users', userRoutes);
+app.get('/api/get/users', userRoutes);
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+  //  console.log('Request headers:', req.headers);
+  //  console.log('Request body:', req.body);
+    next();
 });
 
-// Basic route
-app.get("/", (req, res) => {
-    res.send("Welcome!");
-});
+
+
+
+
 
 
 module.exports = app;

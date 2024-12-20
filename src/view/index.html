@@ -4,11 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My UI</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Welcome to My App</h1>
-    <p>This is a simple UI served by Node.js.</p>
-    <script src="script.js"></script>
+    <h1>User Management</h1>
+    <div>
+        <h2>Add User</h2>
+        <form id="userForm">
+            <label for="id">User ID:</label>
+            <input type="text" id="id" name="id" required />
+            <br />
+            <label for="name">User Name:</label>
+            <input type="text" id="name" name="name" required />
+            <br />
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+    <div>
+        <h2>User List</h2>
+        <ul id="userList"></ul>
+    </div>
+    
+    <script src="/components/addUser.js" defer></script>
+
 </body>
 </html>
