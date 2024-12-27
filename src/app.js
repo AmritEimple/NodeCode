@@ -5,6 +5,9 @@ const userRoutes = require('./routes/userRoutes');
 const path = require("path");
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
 
 // Middleware to serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "view")));
@@ -28,6 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //     res.sendFile(path.join(__dirname, "view", "addUser.html"));
 // });
 
+//http://localhost:3003/api-docs/#/default/post_api_users -- to see on swagger
 
 // Middleware
 app.use(bodyParser.json());
@@ -38,6 +42,7 @@ app.use(cors());
 
 app.post('/api/users', userRoutes);
 app.get('/api/get/users', userRoutes);
+
 app.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.url}`);
   //  console.log('Request headers:', req.headers);
@@ -49,6 +54,7 @@ app.use((req, res, next) => {
 
 
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 module.exports = app;
