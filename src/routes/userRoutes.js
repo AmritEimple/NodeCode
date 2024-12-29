@@ -6,4 +6,5 @@ const router = express.Router();
 router.post('/api/users', createUser); // Add user
 router.get('/api/get/users', fetchUsers);  // Fetch all users
 
+//test
 module.exports = router;
