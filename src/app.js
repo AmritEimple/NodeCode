@@ -13,7 +13,9 @@ const swaggerDocument = require('./swagger-output.json');
 app.use(express.static(path.join(__dirname, "view")));
 //console.log(path.join(__dirname, "view"));
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, 'components'))); // Serve static files from the "public" directory
+//app.use(express.static(path.join(__dirname, 'components'))); // Serve static files from the "public" directory
+
+// Route to render an HTML page
 
 // Route to serve the main HTML file
 // app.get("/", (req, res) => {
@@ -42,6 +44,12 @@ app.use(cors());
 
 app.post('/api/users', userRoutes);
 app.get('/api/get/users', userRoutes);
+app.get('/api/users/:id', userRoutes);
+
+app.get('/usergrid', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'userGrid.html'));
+});
+
 
 app.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.url}`);

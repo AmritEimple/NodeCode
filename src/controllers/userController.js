@@ -1,4 +1,4 @@
-const { getUsers, addUser } = require('../models/userModel');
+const { getUsers, addUser, getUserById  } = require('../models/userModel');
 
 const fetchUsers = async (req, res) => {
     try {
@@ -23,6 +23,17 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, fetchUsers };
+const getUser = async (req, res) => {
+    try {
+        const user = await getUserById(req.params.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+module.exports = { createUser, fetchUsers, getUser };
 
 

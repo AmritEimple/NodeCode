@@ -3,15 +3,28 @@ const sql = require('mssql');
 
 const getUsers = async () => {
     const pool = await db;
-    const result = await pool.request().query('SELECT * FROM users');
+    const result = await pool.request().query('SELECT id,name FROM users');
     return result.recordset;
+};
+
+
+const getUserById = async (id) => {
+    const pool = await db;
+    const result = await pool.request()
+        .input('id', sql.Int, id)
+        .query('SELECT * FROM Users WHERE id = @id');
+    return result.recordset[0];
 };
 
 const addUser = async (id, name) => {
     try {
-        const pool = await db; // Ensure the connection pool is established
+        //const pool = await db; // Ensure the connection pool is established
+        const pool = await sql.connect(); 
+        console.log('123');
+        
+        //console.log('Mocked pool:', pool === poolMock); //debug
         const request = pool.request(); // Create a new request instance
-
+        
         console.log('Inserting user with ID:', id, 'and Name:', name);
 
         // Add parameters and execute query
@@ -21,12 +34,13 @@ const addUser = async (id, name) => {
             .query('INSERT INTO Users (id, name) VALUES (@id, @name)'); // Use parameterized query
 
         console.log('User inserted successfully:', { id, name }); // Debug log
+
     } catch (error) {
         console.error('Error in addUser:', error); // Log detailed error
         throw error; // Propagate the error to the controller
     }
 };
 
-module.exports = { addUser, getUsers };
+module.exports = { addUser, getUsers, getUserById };
 
 
